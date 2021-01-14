@@ -1,0 +1,7 @@
+.badge {
+    border-radius: 50% !important;
+}
+
+.geek-totoro-2::before {
+    font-size: 7rem;
+}
