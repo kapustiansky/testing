@@ -1,9 +1,9 @@
 import React from 'react';
 
-import ItemStatusFilter from '../item-status-filter';
+import Filters from '../filters';
 import './app-header.css'
 
-const AppHeader = ({toDo, done}) => {
+const AppHeader = ({ toDo, done, onSearchCange }) => {
 	return (
 		<div>
 			<i className="geek-totoro-2"></i>
@@ -11,7 +11,7 @@ const AppHeader = ({toDo, done}) => {
 				more <span className="badge bg-dark mr-1">{toDo}</span>
 				done <span className="badge bg-dark">{done}</span>
 			</div>
-			<ItemStatusFilter />
+			<Filters onSearchCange={onSearchCange}/>
 		</div>
 	);
 }

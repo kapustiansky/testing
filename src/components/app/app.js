@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AppHeader from '../app-header';
-//import SearchPanel from './components/search-panel';
 import TodoList from '../todo-list';
 import ItemAddForm from "../item-add-form";
 
@@ -16,7 +15,8 @@ class App extends Component {
 				this.createTodoItem('Купить хлебушка'),
 				this.createTodoItem('Вычеркнуть хлебушек из списка'),
 				this.createTodoItem('Learn React'),
-			]
+			],
+			term: ''
 		}
 	}
 
@@ -75,18 +75,34 @@ class App extends Component {
 			id: this.maxId++
 		}
 	}
+
+	onSearchCange = (term) => {
+		this.setState({ term })
+	};
+
+	search = (items, term) => {
+		if(term.length === 0) {
+			return items;
+		}
+
+		return items.filter((item) => {
+			return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+		});
+	}
 	
 	render() {
-		const { todoData } = this.state;
+		const { todoData, term } = this.state;
+		const visibleItems = this.search(todoData, term);
 		const doneCount = todoData.filter((el) => el.done).length;
 		const todoCount = todoData.length - doneCount;
 		return	(
 			<section className="container-sm px-sm-5 py-1 py-md-5">
 				<AppHeader 
 					toDo={todoCount}
-					done={doneCount}/>
+					done={doneCount}
+					onSearchCange={this.onSearchCange}/>
 				<TodoList 
-					todos={todoData}
+					todos={visibleItems}
 					onDeleted={this.deleteItem}
 					onToggleDone={this.onToggleDone}
 					onToggleImportant={this.onToggleImportant}/>
