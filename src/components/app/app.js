@@ -17,6 +17,7 @@ class App extends Component {
 				this.createTodoItem('Learn React'),
 			],
 			term: '',
+			filter: 'all'
 		};
 	}
 
@@ -74,7 +75,7 @@ class App extends Component {
 		};
 	};
 
-	onSearchCange = (term) => {
+	onSearchChange = (term) => {
 		this.setState({ term });
 	};
 
@@ -88,14 +89,36 @@ class App extends Component {
 		});
 	};
 
+	filter = (items, filter) => {
+		switch (filter) {
+			case 'all':
+				return items;
+			case 'active':
+				return items.filter((item) => !item.done);
+			case 'done':
+				return items.filter((item) => item.done);
+			default:
+				return items;
+		}
+	}
+
+	onFilterChange = (filter) => {
+		this.setState({ filter });
+	}
+
 	render() {
-		const { todoData, term } = this.state;
-		const visibleItems = this.search(todoData, term);
+		const { todoData, term, filter } = this.state;
+		const visibleItems = this.filter(this.search(todoData, term), filter);
 		const doneCount = todoData.filter((el) => el.done).length;
 		const todoCount = todoData.length - doneCount;
 		return (
 			<section className='container-sm px-sm-5 py-1 py-md-5'>
-				<AppHeader toDo={todoCount} done={doneCount} onSearchCange={this.onSearchCange} />
+				<AppHeader 
+					toDo={todoCount} 
+					done={doneCount} 
+					onSearchChange={this.onSearchChange} 
+					filter={filter}
+					onFilterChange={this.onFilterChange}/>
 				<TodoList
 					todos={visibleItems}
 					onDeleted={this.deleteItem}
