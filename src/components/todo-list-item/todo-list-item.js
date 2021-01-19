@@ -28,13 +28,13 @@ class TodoListItem extends Component {
   
         <button 
           type="button"
-          className="btn btn-outline-success btn-sm float-right geek-dust-bunny-done"
+          className="btn btn-outline-primary btn-sm float-right geek-dust-bunny-danger"
           onClick={onToggleImportant}>
         </button>
   
         <button 
           type="button"
-          className="btn btn-outline-danger btn-sm float-right geek-dust-bunny-danger"
+          className="btn btn-outline-danger btn-sm float-right geek-dust-bunny-s"
           onClick={onDeleted}>
         </button>
       </span>
